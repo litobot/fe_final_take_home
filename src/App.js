@@ -1,20 +1,20 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import SubscriptionDetails from './Component/SubscriptionsDetails/SubscriptionsDetails.js';
-
 import './App.css';
-import SubscriptionsContainer from './Component/SubscriptionsContainer/SubscriptionsContainer.js';
+import SubscriptionsContainer from './Components/SubscriptionsContainer/SubscriptionsContainer';
+import SubscriptionDetails from './Components/SubscriptionDetails/SubscriptionDetails';
+
 
 function App (){
   
 
   return (
-    <Router>
-      <Routes>
-          <Route path="/" element={<SubscriptionsContainer />} />
-          <Route path="/subscriptions/:subscriptionsId" element={<SubscriptionDetails />} />
-      </Routes>
-    </Router>
+    <Routes>
+      <Route path="/" element={<SubscriptionsContainer />} />
+      <Route path="/subscriptions/:subscriptionId" element={<SubscriptionDetails />} />
+    </Routes>
   )
 }
+
+{/* <Route path="*" element={<p>Page Not Found</p>} /> */}
 
 export default App;
