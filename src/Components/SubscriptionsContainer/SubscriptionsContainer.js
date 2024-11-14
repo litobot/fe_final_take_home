@@ -3,15 +3,7 @@ import { Link } from 'react-router-dom';
 
 function SubscriptionsContainer() {
   const [subscriptions, setSubscriptions] = useState([]);
-  // const [filterQuery, setFilterQuery] = useState('')
-
-  // Not sure what the simplest sort/search query would look like with my current code.
-  // Maybe a search user's last name?
-  // I need it to:
-    // Have an input.
-    // Have its own state. (filterQuery)
-    // Rerender the page when input is updated to reflect new filter results (useEffect)
-    // Have a handler function to deal with the input and update the state of filterQuery.
+  const [filterQuery, setFilterQuery] = useState('')
 
   const fetchAllSubscriptions = () => {
     fetch("http://localhost:3000/api/v1/subscriptions")
@@ -20,9 +12,25 @@ function SubscriptionsContainer() {
       .catch((error) => console.error(error));
   };
 
+  // Runs on mount - [] === only runs once
   useEffect(() => {
     fetchAllSubscriptions();
   }, []);
+
+  // 
+  const filterSubscriptions = (event) => {
+    setFilterQuery(event.target.value)
+    let subscriptionsCopy = [...subscriptions]
+    const filteredResults = subscriptionsCopy.filter(subscription => {
+      console.log('subscription: ', subscription)
+      const customerName = `${subscription.attributes.customer_details.first_name} ${subscription.attributes.customer_details.last_name}`
+      console.log('CustomerName: ', customerName)
+      console.log('filterQuery: ', filterQuery)
+      return customerName.toLowerCase().includes(filterQuery.toLowerCase());
+    });
+    console.log('Filtered Results: ', filteredResults)
+    setSubscriptions(filteredResults)
+  };
   
 
   const renderSubscriptionCards = () => {
@@ -51,6 +59,14 @@ function SubscriptionsContainer() {
 
   return (
     <div className='subscriptions-container'>
+      <input
+        type='text'
+        placeholder='Search by Customer Name'
+        className='search-bar'
+        value={filterQuery}
+        // Runs the filterSubscriptions fx every time new input received
+        onChange={(event) => filterSubscriptions(event)}
+        />
       {renderSubscriptionCards()}
     </div>
   );
