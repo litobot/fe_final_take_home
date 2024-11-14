@@ -6,7 +6,6 @@ import SubscriptionDetails from './Components/SubscriptionDetails/SubscriptionDe
 
 function App (){
   
-
   return (
     <Routes>
       <Route path="/" element={<SubscriptionsContainer />} />
@@ -14,7 +13,5 @@ function App (){
     </Routes>
   )
 }
-
-{/* <Route path="*" element={<p>Page Not Found</p>} /> */}
 
 export default App;

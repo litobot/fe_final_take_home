@@ -12,23 +12,17 @@ function SubscriptionsContainer() {
       .catch((error) => console.error(error));
   };
 
-  // Runs on mount - [] === only runs once
   useEffect(() => {
     fetchAllSubscriptions();
   }, []);
 
-  // 
   const filterSubscriptions = (event) => {
     setFilterQuery(event.target.value)
     let subscriptionsCopy = [...subscriptions]
     const filteredResults = subscriptionsCopy.filter(subscription => {
-      console.log('subscription: ', subscription)
       const customerName = `${subscription.attributes.customer_details.first_name} ${subscription.attributes.customer_details.last_name}`
-      console.log('CustomerName: ', customerName)
-      console.log('filterQuery: ', filterQuery)
       return customerName.toLowerCase().includes(filterQuery.toLowerCase());
     });
-    console.log('Filtered Results: ', filteredResults)
     setSubscriptions(filteredResults)
   };
   
@@ -40,7 +34,6 @@ function SubscriptionsContainer() {
 
       return (
         <Link to={`/subscriptions/${id}`} key={id}>
-            
           <div className='subscription-card'>
             <h3>Customer Name: {customerName}</h3>
             <p>Subscription ID: {id}</p>
@@ -64,7 +57,6 @@ function SubscriptionsContainer() {
         placeholder='Search by Customer Name'
         className='search-bar'
         value={filterQuery}
-        // Runs the filterSubscriptions fx every time new input received
         onChange={(event) => filterSubscriptions(event)}
         />
       {renderSubscriptionCards()}
