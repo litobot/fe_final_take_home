@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './Form.css';
 
-function Form({ addIdea }){
+function Form({ setPotato }){
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
@@ -12,7 +12,10 @@ function Form({ addIdea }){
         title,
         description
     }
-    addIdea(newIdea)
+    // "Action goes up"
+    // addIdea creates the newIdea object here with user input via the Form component
+    // 
+    setPotato(newIdea)
     clearInput()
 }
 function clearInput(){
