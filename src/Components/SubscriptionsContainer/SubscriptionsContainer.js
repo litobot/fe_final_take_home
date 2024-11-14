@@ -3,8 +3,15 @@ import { Link } from 'react-router-dom';
 
 function SubscriptionsContainer() {
   const [subscriptions, setSubscriptions] = useState([]);
+  // const [filterQuery, setFilterQuery] = useState('')
 
-  console.log('subscriptions: ', subscriptions);
+  // Not sure what the simplest sort/search query would look like with my current code.
+  // Maybe a search user's last name?
+  // I need it to:
+    // Have an input.
+    // Have its own state. (filterQuery)
+    // Rerender the page when input is updated to reflect new filter results (useEffect)
+    // Have a handler function to deal with the input and update the state of filterQuery.
 
   const fetchAllSubscriptions = () => {
     fetch("http://localhost:3000/api/v1/subscriptions")
@@ -16,6 +23,7 @@ function SubscriptionsContainer() {
   useEffect(() => {
     fetchAllSubscriptions();
   }, []);
+  
 
   const renderSubscriptionCards = () => {
     return subscriptions.map((subscription) => {
@@ -30,7 +38,7 @@ function SubscriptionsContainer() {
             <p>Subscription ID: {id}</p>
             <ul>
               {teas.map((tea, index) => (
-                <li key={index}>{tea.title}</li>
+                <li key={index}>{tea.title} - ${tea.price.toFixed(2)}</li>
               ))}
             </ul>
             <p>Frequency: {subscription_frequency}</p>
